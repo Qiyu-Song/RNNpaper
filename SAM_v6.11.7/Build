@@ -1,0 +1,13 @@
+#! /bin/bash -f
+
+# Load the modules before running Build
+echo Loading modules ... takes half a minute ...
+
+module purge
+module load intel/23.0.0-fasrc01 intelmpi/2021.8.0-fasrc01 netcdf-fortran/4.6.0-fasrc03
+export LD_LIBRARY_PATH=/n/sw/helmod-rocky8/apps/Core/mpfr/4.2.1-fasrc01/lib64:$LD_LIBRARY_PATH
+
+./Build.csh >& build.log &  #TODO
+echo build submitted in background
+echo logs writing in build.log
+

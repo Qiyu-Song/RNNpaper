@@ -1,0 +1,106 @@
+&PARAMETERS
+
+caseid ='spinup'
+
+nrestart = 0,
+
+dt = 20.,
+dx = 4000.
+dy = 4000.
+
+day0=0.0,
+
+nstop    = 864000,
+nprint   = 45,
+nstat    = 45,
+nstatfrq = 1,
+
+restart_sep = .false.,
+output_sep = .false.,
+nrestart_skip = 95,
+
+dofplane = .false.  
+docoriolis = .false.,
+
+LES_S = .false.
+
+doseasons = .false.,
+nrad = 45,
+
+OCEAN = .true.,
+tabs_s = 302.15,
+
+nxco2 = 1.,
+dosgs           = .true.,
+dodamping       = .true.,
+doupperbound    = .true.,
+docloud         = .true.,
+doprecip        = .true.,
+dolongwave      = .false.,
+doshortwave     = .false.,
+dosurface       = .true.,
+dolargescale    = .true.,
+doradforcing    = .false.,
+dosfcforcing    = .true.,
+donudging_uv    = .true.,
+donudging_tq    = .false.,
+
+doperpetual     = .true.,
+dosolarconstant = .true.
+
+tauls           = 900.,
+tautqls         = 864000.,
+
+SFC_FLX_FXD    = .false.,
+SFC_TAU_FXD    = .false.,
+
+doisccp = .false.,
+
+doSAMconditionals = .false.
+dosatupdnconditionals = .false.
+
+perturb_type = 0.
+
+
+nsave2D = 45,
+nsave2Dstart    = 999999990,
+nsave2Dend      = 999999999,
+save2Dsep = .false.
+save2Dbin = .true.
+
+nsave3D = 45,
+nsave3Dstart    = 999999990,
+nsave3Dend      = 999999999,
+save3Dbin      = .true.
+
+nmovie       = 60,
+nmoviestart  = 99999990
+nmovieend    = 99960480
+
+/
+
+&KUANG_PARAMS
+iensemble = 0
+icopy = 0
+dompiensemble = .true.
+
+doidealizedrad = .true.
+dobulksfc = .true.
+
+nstep_separate_statfile=216000
+
+doparameterizedwave = .false.
+nstartlinearwave = 99999999
+nsteplinearwavebg = 4320
+nsteplinearwave = 1
+wavenumber_factor = 0.5
+wavedampingtime = 1.0
+wavetqdampingtime = 1.0
+doadvectbg = .true.
+dointernalnoise = .false.
+
+/
+
+&SGS_TKE
+dosmagor = .false.
+/

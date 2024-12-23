@@ -1,0 +1,14 @@
+#!/bin/bash
+#SBATCH -J SI_addp
+#SBATCH -o out-%j
+#SBATCH -e eo-%j
+#SBATCH -n 1
+#SBATCH -c 1
+#SBATCH -t 0-12:00
+#SBATCH -p huce_cascade
+#SBATCH --mem 64000
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=qsong@g.harvard.edu
+ 
+module load matlab
+srun -c $SLURM_CPUS_PER_TASK matlab -nosplash -nodesktop -r "analyze_rand_n4sid_jas24_4x"

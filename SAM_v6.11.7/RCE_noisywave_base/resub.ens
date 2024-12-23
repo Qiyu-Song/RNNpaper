@@ -1,0 +1,79 @@
+#!/bin/bash
+#SBATCH -n 16 # TODO number of cpu
+#SBATCH -N 1
+#SBATCH --use-min-nodes
+#SBATCH -o out-%j
+#SBATCH -e eo-%j
+#SBATCH -p huce_cascade
+##SBATCH --contiguous
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=qsong@g.harvard.edu
+#SBATCH -J RCE_randmultsine # job name
+#SBATCH -t 0-10:00                         # job time in minutes
+#SBATCH --mem-per-cpu=4000 #MB
+#SBATCH --no-requeue
+#SBATCH --exclude=holy7c[18109,20212]
+##SBATCH --exclusive
+
+module purge
+module load intel/23.0.0-fasrc01 intelmpi/2021.8.0-fasrc01 netcdf-fortran/4.6.0-fasrc03
+#module load intel/23.2.0-fasrc01  openmpi/4.1.5-fasrc03 netcdf-fortran/4.6.1-fasrc01
+#module load intel/23.0.0-fasrc01  openmpi/4.1.4-fasrc01 netcdf-fortran/4.6.0-fasrc01
+export LD_LIBRARY_PATH=/n/sw/helmod-rocky8/apps/Core/mpfr/4.2.1-fasrc01/lib64:$LD_LIBRARY_PATH
+echo $LD_LIBRARY_PATH
+ulimit -s unlimited
+
+# SET THIS TO THE MODEL DIRECTORY
+scriptdir=$SLURM_SUBMIT_DIR/..
+
+case=RCE_noisywave_test #TODO
+subcase=wn10_damp2day_noadvectbg_test #TODO
+#jobfile=$case/resub$subcase.sbatch
+logfile=$case/log$case$subcase
+prmfile=$case/prm.$subcase
+prmloc=$case/prm
+SAMname=$scriptdir/SAM_ADV_MPDATA_SGS_TKE_RAD_RRTM_MICRO_SAM1MOM
+#SAMname=`ls $scriptdir/SAM_*`
+
+
+if !(test -f ${SAMname}_${case}_${subcase}); then
+ cp -a $SAMname ${SAMname}_${case}_${subcase}
+else
+ echo "exe file already exists"
+fi
+
+#cp -a $SAMname ${SAMname}_${case}_${subcase}
+SAMname=${SAMname}_${case}_${subcase}
+
+# Change to correct directory
+\cd $scriptdir
+\cp $case/CaseName ./
+\cp $prmfile $prmloc
+#cp $case/sfc$subcase $case/sfc
+#cp $case/lsf$subcase $case/lsf
+#cp $case/snd$subcase $case/snd
+
+#time mpirun --bind-to core -np $SLURM_NTASKS $SAMname >> $logfile
+echo $SLURMD_NODENAME
+echo $SLURM_JOB_NODELIST
+export OMPI_MCA_btl="self,openib"
+srun -n $SLURM_NTASKS --mpi=pmi2 $SAMname > $logfile.$SLURM_JOBID
+exitstatus=$?
+echo SAM stopped with exit status $exitstatus
+
+# Wait for a few seconds to make sure everything is finished
+#sleep 5 
+#echo $exitstatus exitstatus
+#
+#if [ $exitstatus -eq 0 ]
+#    then
+#    echo It appears the previous run ended properly and job not yet finished.
+#    echo Resubmitting $jobfile
+#    cat $prmfile | sed s/nrestart.\*=.\*0/nrestart\ =\ 1/ > temp.namelist
+#    \mv temp.namelist $prmfile
+#    \cp $prmfile $prmloc
+#    rsh $cluster "cd $scriptdir; /usr/local/bin/qsub $jobfile"
+#fi
+
+exit $exitstatus
+
