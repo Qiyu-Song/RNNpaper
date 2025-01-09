@@ -189,12 +189,8 @@ if __name__ == '__main__':
     load_h0 = not h0_only
     do_test = (stage == 2) and load_h0
 
-    h0_only = False
-    do_test = True
-    load_h0 = True
-
     # define model name
-    modeltype = f"paper_final_rand_4_to_50_seqlen_{seq_len}_skip_{skip_rand}"
+    modeltype = f"rand_4_to_50_seqlen_{seq_len}_skip_{skip_rand}"
     if stage == 2:
         modeltype = modeltype + f"_noisywave1.0_6to20_damp2_seqlen_{seq_len}_skip_{skip_wave}"
     if h0_only:
@@ -207,12 +203,12 @@ if __name__ == '__main__':
     # Current values only work for the authors. Change to correct files before running the code.
     loadmodel = None
     if stage == 1 and (not h0_only):
-        loadmodel = '/n/netscratch/kuang_lab/Lab/qiyusong/SAM_RNN/logs/paper_final_rand_4_to_50_seqlen_192_skip_48_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=29000.ckpt'
+        loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=29000.ckpt'
     elif stage == 2:
         if h0_only:
-            loadmodel = '/n/netscratch/kuang_lab/Lab/qiyusong/SAM_RNN/logs/paper_final_rand_4_to_50_seqlen_192_skip_48_all_param_5e-06_128/version_0/checkpoints/epoch=9519-val_loss=0.093.ckpt'
+            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_all_param_5e-06_128/version_0/checkpoints/epoch=9519-val_loss=0.093.ckpt'
         else:
-            loadmodel = '/n/netscratch/kuang_lab/Lab/qiyusong/SAM_RNN/logs/paper_final_rand_4_to_50_seqlen_192_skip_48_noisywave1.0_6to20_damp2_seqlen_192_skip_24_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=42000.ckpt'
+            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_noisywave1.0_6to20_damp2_seqlen_192_skip_24_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=42000.ckpt'
 
     torch.set_default_dtype(torch.float64)
     torch.manual_seed(42)
@@ -227,7 +223,7 @@ if __name__ == '__main__':
     for msine_amp in [4, 6, 8, 10, 15, 20, 30, 40, 50]:
         for iexp in [0, 1]:
             print(f'   reading msine_{msine_amp}_{iexp}')
-            data_exp = np.load(f'/n/kuangdss01/users/qiyusong/SAM_RNN/data/msinefx{msine_amp}_{iexp}_256_addp.npz')
+            data_exp = np.load(f'../data/msinefx{msine_amp}_{iexp}_256_addp.npz')
             SAMdata.append(
                 data_struct(data_exp['input_weighted'], data_exp['target_weighted'], str(data_exp['experiment']))
             )
@@ -238,14 +234,14 @@ if __name__ == '__main__':
             for damp in [2]:
                 print(f'   reading noisywave_1.0 wavenumber_{wn}_damp_{damp}_1')
                 data_exp = np.load(
-                    f'/n/kuangdss01/users/qiyusong/SAM_RNN/data/wn{wn}_damp{damp}day_noadvectbg_noiselevel_1.0_1_addp.npz')
+                    f'../data/wn{wn}_damp{damp}day_noadvectbg_noiselevel_1.0_1_addp.npz')
                 SAMdata.append(
                     data_struct(data_exp['input_weighted'], data_exp['target_weighted'], str(data_exp['experiment']))
                 )
                 n_wave_exp += 1
                 print(f'   reading noisywave_1.0 wavenumber_{wn}_damp_{damp}_2')
                 data_exp = np.load(
-                    f'/n/kuangdss01/users/qiyusong/SAM_RNN/data/wn{wn}_damp{damp}day_noadvectbg_noiselevel_1.0_2_addp.npz')
+                    f'../data/wn{wn}_damp{damp}day_noadvectbg_noiselevel_1.0_2_addp.npz')
                 SAMdata.append(
                     data_struct(data_exp['input_weighted'], data_exp['target_weighted'], str(data_exp['experiment']))
                 )
