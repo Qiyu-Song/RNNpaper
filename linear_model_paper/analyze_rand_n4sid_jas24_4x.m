@@ -17,39 +17,11 @@ mass_weight=diag(sqrt([dm(1:nT);2.5^2*dm(1:nQ)]));
 prec_weight=[0.*dm(1:nT);2.5*dm(1:nQ)]; %weighting to compute net precipitation
 mse_weight=[dm(1:nT);2.5*dm(1:nQ)];     %weighting to compute column MSE
 
-caseid=4
+caseid=1
 switch caseid
   case 1
-   casename='msinefx2_1_2';
-   experiments={'msinefx2_1','msinefx2_2'};
-   num_P=4; %number of periods
-   len_P=19200; % length of a period (in unit of 900ss)
-   day_P=len_P/96; %length of a period in days
-   timestep=900; %in seconds
-  case 2
-   casename='msinefx4_0_1';
-   experiments={'msinefx4_0','msinefx4_1'};
-   num_P=4; %number of periods
-   len_P=19200; % length of a period (in unit of 900ss)
-   day_P=len_P/96; %length of a period in days
-   timestep=900; %in seconds
-  case 3
-   casename='msinefx10_0_1';
-   experiments={'msinefx10_0','msinefx10_1'};
-   num_P=4; %number of periods
-   len_P=19200; % length of a period (in unit of 900ss)
-   day_P=len_P/96; %length of a period in days
-   timestep=900; %in seconds
-  case 4
    casename='msinefx4_0_2';
    experiments={'msinefx4_0','msinefx4_1', 'msinefx4_2'};
-   num_P=4; %number of periods
-   len_P=19200; % length of a period (in unit of 900ss)
-   day_P=len_P/96; %length of a period in days
-   timestep=900; %in seconds
-  case 5
-   casename='msinefx4_0_1_10_0_1';
-   experiments={'msinefx4_0','msinefx4_1', 'msinefx10_0', 'msinefx10_1'};
    num_P=4; %number of periods
    len_P=19200; % length of a period (in unit of 900ss)
    day_P=len_P/96; %length of a period in days

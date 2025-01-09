@@ -22,7 +22,7 @@ my=mean(y(:,:,1:num_P),3);
 mu=mean(u(:,:,1:num_P),3);
 mlogp=mean(logp(:,:,1:num_P),3);
 
-nc_spinup='/n/holylfs04/LABS/kuang_lab/Lab/qiyusong/SAM_output/OUT_STAT/RCE_randmultsine_spinup_10243.nc';
+nc_spinup='../data/RCE_randmultsine_spinup_10243.nc';
 T_spinup=double(ncread(nc_spinup,'TABS'));
 Q_spinup=double(ncread(nc_spinup,'QV'));
 Y_spinup=[T_spinup(1:nT,:); Q_spinup(1:nQ,:)];

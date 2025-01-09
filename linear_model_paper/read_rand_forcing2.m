@@ -1,16 +1,8 @@
 function out=read_rand_forcing2(casename,nT,nQ,i)
-%path='/n/home10/kuang/Work/MATRIX/OUT_STAT3/';
-%nc=[path 'IDEAL2_2048x1024x28_2048_f0_' casename '_' int2str(i) ...
-%    '.nc'];
-path='/n/holylfs04/LABS/kuang_lab/Lab/qiyusong/SAM_output/OUT_STAT/';
+path='../data/';
 nc=[path 'RCE_randmultsine_run_1024_' casename '_' int2str(i) '.nc'];
-%T=double(ncread(nc,'TL'));
-%Q=double(ncread(nc,'QT'));
 T=double(ncread(nc,'TABS'));
 Q=double(ncread(nc,'QV'));
-%Q=double(ncread(nc,'QT'))+double(ncread(nc,'QR'))+double(ncread(nc,'QS'))+double(ncread(nc,'QG'));
-%T=double(ncread(nc,'T_WAVE'));
-%Q=double(ncread(nc,'Q_WAVE'));
 Y=[T(1:nT,:); Q(1:nQ,:)];
 dT=double(ncread(nc,'TTENDR'));
 dQ=double(ncread(nc,'QTENDR'));
