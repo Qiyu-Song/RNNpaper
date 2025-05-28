@@ -61,7 +61,7 @@ def read_params_from_ssm(hidden_size, input_size=40, output_size=40, name_fix=No
     B = np.zeros((hidden_size, input_size), dtype=np.float64)
     C = np.zeros((output_size, hidden_size), dtype=np.float64)
     for var in [A, B, C]:
-        print(var.shape)
+        #print(var.shape)
         for i in range(var.shape[0]):
             var[i, :] = allMtq.readline().split()
     return A, B, C
