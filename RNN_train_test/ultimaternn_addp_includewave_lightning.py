@@ -181,13 +181,14 @@ if __name__ == '__main__':
     # Stage 1: train with random forcing data
     # Stage 2: train with both random forcing data and coupled-wave forcing data
     # For each stage, first train for h0 only, then train for all parameters
-    stage = 1
-    # stage = 2
-    h0_only = True
-    # h0_only = False
+    # stage = 1
+    stage = 2
+    # h0_only = True
+    h0_only = False
 
     load_h0 = not h0_only
-    do_test = (stage == 2) and load_h0
+    #do_test = (stage == 2) and load_h0
+    do_test = load_h0
 
     # define model name
     modeltype = f"rand_4_to_50_seqlen_{seq_len}_skip_{skip_rand}"
@@ -203,12 +204,12 @@ if __name__ == '__main__':
     # Current values only work for the authors. Change to correct files before running the code.
     loadmodel = None
     if stage == 1 and (not h0_only):
-        loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=29000.ckpt'
+        loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_h0_1e-04_256/version_0/checkpoints/epoch=999-step=29000.ckpt'
     elif stage == 2:
         if h0_only:
-            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_all_param_5e-06_128/version_0/checkpoints/epoch=9519-val_loss=0.093.ckpt'
+            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_all_param_5e-06_128/version_0/checkpoints/epoch=9519-val_loss=0.085.ckpt'
         else:
-            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_noisywave1.0_6to20_damp2_seqlen_192_skip_24_test_h0_1e-04_256/version_0/checkpoints/epoch=999-step=42000.ckpt'
+            loadmodel = './logs/rand_4_to_50_seqlen_192_skip_48_noisywave1.0_6to20_damp2_seqlen_192_skip_24_h0_1e-04_256/version_0/checkpoints/epoch=999-step=42000.ckpt'
 
     torch.set_default_dtype(torch.float64)
     torch.manual_seed(42)
